@@ -1,6 +1,6 @@
 # 🏀 March ML Mania 2022 🏀
 
-Repository for the [Men's](https://www.kaggle.com/c/mens-march-mania-2022/overview) and [Women's](https://www.kaggle.com/c/womens-march-mania-2022/team) 2022 competitions hosted by Kaggle.
+Repository for the [Men's](https://www.kaggle.com/c/mens-march-mania-2022/overview) 🤾🏼‍♂️ and [Women's](https://www.kaggle.com/c/womens-march-mania-2022/team) 🤾🏼‍♀️ 2022 competitions hosted by Kaggle.
 
 To reproduce:
   1. Clone the repo
