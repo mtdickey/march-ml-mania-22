@@ -1,0 +1,93 @@
+---
+title: "Round by Round Predictions for 2021 NCAA Tournaments"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(gt)
+setwd("C:/Users/mtdic/Documents/GitHub/march-ml-mania-21/data/men/")
+print(getwd())
+probs <- read.csv("C:/Users/mtdic/Documents/GitHub/march-ml-mania-21/data/men/viz-files/nit-round-by-round-2021-03-20.csv")
+probs_321 <- read.csv("C:/Users/mtdic/Documents/GitHub/march-ml-mania-21/data/men/viz-files/nit-round-by-round-2021-03-21.csv")
+
+```
+
+## NIT as of 3/19/2021
+
+
+```{r probs}
+
+probs[,-1] <-round(probs[,-1]*100,2)
+
+
+full_val_range <- probs %>% 
+  select_if(is.numeric) %>% 
+  range
+
+
+probs %>% arrange(desc(Champ)) %>%
+  gt() %>%
+  tab_header(
+    title = md("**Chance of Reaching Each Round in the 2021 NIT**"),
+    subtitle = md("Through games on March 19th")) %>%
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")),
+    locations = cells_column_labels(everything())) %>%
+  data_color(columns = vars(Elite8, Final4, Final4, Final, Champ),
+             colors = scales::col_numeric(
+                  palette = paletteer::paletteer_d(
+                    palette = "ggsci::orange_material"
+                    ) %>% as.character(),
+                    domain = full_val_range),
+             ) %>%
+  cols_label(TeamName = "Team",
+             Elite8 = "Elite 8",
+             Final4 = "Final 4",
+             Final = "Championship Game",
+             Champ = "Win it all")# %>%
+# gtsave("nit_table.png")
+
+
+```
+
+
+## NIT as of 3/21/2021
+
+
+```{r probs_321}
+
+probs_321[,-1] <-round(probs_321[,-1]*100,2)
+
+
+full_val_range <- probs_321 %>%
+  select_if(is.numeric) %>% 
+  range
+
+
+probs_321 %>% arrange(desc(Champ)) %>%
+  gt() %>%
+  tab_header(
+    title = md("**Chance of Reaching Each Round in the 2021 NIT**"),
+    subtitle = md("Through games on March 20th")) %>%
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")),
+    locations = cells_column_labels(everything())) %>%
+  data_color(columns = vars(Final4, Final4, Final, Champ),
+             colors = scales::col_numeric(
+                  palette = paletteer::paletteer_d(
+                    palette = "ggsci::orange_material"
+                    ) %>% as.character(),
+                    domain = full_val_range),
+             ) %>%
+  cols_label(TeamName = "Team",
+             Final4 = "Semi-finals",
+             Final = "Finals",
+             Champ = "Win it all")# %>%
+# gtsave("nit_table.png")
+
+
+```

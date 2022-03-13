@@ -1,0 +1,64 @@
+---
+title: "2021 NCAA Tournament Predictions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(DT)
+setwd("C:/Users/mtdic/Documents/GitHub/march-ml-mania-21/data/men/")
+sub <- read.csv("subs/submission_w_names_probs_trimmed_2021-03-17.csv")
+sub <- sub %>% select(ID, prob, trimmed_prob, spread)
+sub$TeamID_1 <- as.integer(substr(sub$ID, 6, 9))
+sub$TeamID_2 <- as.integer(substr(sub$ID, 11, 14))
+teams <- read.csv("MTeams.csv")
+
+names(teams) <- c("TeamID_1", "TeamName_1", "fd1_1", "ld1_1")
+sub <- merge(sub, teams[,1:2], by = "TeamID_1")
+names(teams) <- c("TeamID_2", "TeamName_2", "fd1_2", "ld1_2")
+sub <- merge(sub, teams[,1:2], by = "TeamID_2")
+
+setwd("C:/Users/mtdic/Documents/GitHub/march-ml-mania-21/data/women/")
+w_sub <- read.csv("subs/submission_for_table_2021-03-24.csv")
+w_sub$TeamID_1 <- as.integer(substr(w_sub$ID, 6, 9))
+w_sub$TeamID_2 <- as.integer(substr(w_sub$ID, 11, 14))
+teams <- read.csv("WTeams.csv")
+
+names(teams) <- c("TeamID_1", "TeamName_1")
+w_sub <- merge(w_sub, teams[,1:2], by = "TeamID_1")
+names(teams) <- c("TeamID_2", "TeamName_2")
+w_sub <- merge(w_sub, teams[,1:2], by = "TeamID_2")
+
+
+```
+
+## Predictions Submitted to Kaggle {.tabset}
+
+Below are my men's and women's NCAA tournament predictions in terms of probabilities and point spreads.
+
+
+### Men
+
+Note: Submitted probabilities were "trimmed" at 95% (or below 5%) to protect from severe log-loss penalty, but raw-untrimmed probabilities are also available below.
+
+```{r men, echo = FALSE}
+
+sub$prob <- round(sub$prob*100, 2)
+sub$trimmed_prob <- round(sub$trimmed_prob*100, 2)
+sub$spread <- round(sub$spread, 2)
+
+datatable(sub[,c("ID", "TeamName_1", "TeamName_2", "prob", "trimmed_prob", "spread")], filter = "top", options = list(pageLength = 20))
+```
+
+### Women
+
+Note: No "trimming" was needed for women's probabilities as it was for men's.
+
+```{r women, echo = FALSE}
+
+w_sub$prob <- round(w_sub$prob*100, 2)
+w_sub$spread <- round(w_sub$spread, 2)
+
+datatable(w_sub[,c("ID", "TeamName_1", "TeamName_2", "prob", "spread")], filter = "top", options = list(pageLength = 20))
+```
