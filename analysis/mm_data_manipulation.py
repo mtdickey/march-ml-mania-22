@@ -651,10 +651,10 @@ def make_teams_target(data, league):
 def prepare_data(league):
 
     if league == 'women':
-        regular_season = 'WRegularSeasonDetailedResults.csv'
-        playoff = 'WNCAATourneyDetailedResults.csv'
-        playoff_compact = 'WNCAATourneyCompactResults.csv'
-        seed = 'WNCAATourneySeeds.csv'
+        regular_season = 'stage_2/WRegularSeasonDetailedResults.csv'
+        playoff = 'stage_2/WNCAATourneyDetailedResults.csv'
+        playoff_compact = 'stage_2/WNCAATourneyCompactResults.csv'
+        seed = 'stage_2/WNCAATourneySeeds.csv'
         save_loc = 'processed/'
     else:
         regular_season = 'MRegularSeasonDetailedResults.csv'
