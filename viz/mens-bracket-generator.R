@@ -2,7 +2,7 @@
 
 library(dplyr)
 
-pdf(file = "mens_bracket_scaled_2021.pdf",   # The directory you want to save the file in
+pdf(file = "mens_bracket_scaled_2022.pdf",   # The directory you want to save the file in
     width = 12, # The width of the plot in inches
     height = 12) # The height of the plot in inches
 
@@ -11,10 +11,10 @@ rm(list=ls()) # Clear workspace
 
 
 ### Load and merge datasets
-submission<-read.csv("C:/Users/mtdic/Documents/GitHub/march-ml-mania-21/data/men/viz-files/round-by-round-probs-untrimmed-2021-03-17.csv",
+submission<-read.csv("C:/Users/mtdic/Documents/GitHub/march-ml-mania-22/data/men/viz-files/round-by-round-probs-untrimmed-2022-03-14.csv",
                      stringsAsFactors = F)
-seeds<-read.csv("C:/Users/mtdic/Documents/GitHub/march-ml-mania-21/data/men/MNCAATourneySeeds.csv")
-seeds <- seeds[which(seeds$Season == 2021),]  ## 
+seeds<-read.csv("C:/Users/mtdic/Documents/GitHub/march-ml-mania-22/data/men/stage_2/MNCAATourneySeeds.csv")
+seeds <- seeds[which(seeds$Season == 2022),]  ## 
 seeds$Region<-substr(seeds$Seed,1,1)          ## Region
 seeds$Seed<-as.numeric(substr(seeds$Seed,2,3))
 submission<-merge(submission,seeds, by = "TeamID")
@@ -94,9 +94,9 @@ text(29.8,39.75,top_left_7_10_winner,cex=.7,col = "#737373")
 text(29.8,35.75,top_left_2_15_winner,cex=.7,col = "#737373")
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(29.8,64.5,paste0(top_left_1_16_winner,"%"),cex=.9)  
-segments(20,63,20,63.75, lwd = 9*(top_left_1_16_winner/100), col = "#001A57")
-segments(20,63,40,63, lwd = 9*(top_left_1_16_winner/100), col = "#001A57")
-segments(40,61,40,63, lwd = 9*(top_left_1_16_winner/100), col = "#001A57") ## connect two teams (R32)
+segments(20,63,20,63.75, lwd = 9*(top_left_1_16_winner/100), col = "#041E42")
+segments(20,63,40,63, lwd = 9*(top_left_1_16_winner/100), col = "#041E42")
+segments(40,61,40,63, lwd = 9*(top_left_1_16_winner/100), col = "#041E42") ## connect two teams (R32)
 
 # Sweet 16, top left (Region X)
 ## Determine winners/probabilities from 1st round and carry forward
@@ -111,8 +111,8 @@ text(49.8,45.75,top_left_s16_3_winner,cex=.7,col = "#737373")
 text(49.8,37.75,top_left_s16_4_winner,cex=.7,col = "#737373")
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(49.8,62.5,paste0(top_left_s16_1_winner,"%"),cex=.9)  
-segments(40,61,60,61, lwd = 9*(top_left_s16_1_winner/100), col = "#001A57") ## Left side R2 winner line
-segments(60,57,60,61, lwd = 9*(top_left_s16_1_winner/100), col = "#001A57") ## connect two teams (Sweet 16)
+segments(40,61,60,61, lwd = 9*(top_left_s16_1_winner/100), col = "#041E42") ## Left side R2 winner line
+segments(60,57,60,61, lwd = 9*(top_left_s16_1_winner/100), col = "#041E42") ## connect two teams (Sweet 16)
 
 
 
@@ -123,8 +123,8 @@ top_left_e8_2_winner <- (submission %>% filter(Region == "X" & Seed %in% c(6,11,
 text(69.8,42.25,top_left_e8_2_winner,cex=.9,col = "#737373")
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(69.8,58.5,paste0(top_left_e8_1_winner,"%"),cex=.9)
-segments(60,57,80,57, lwd = 9*(top_left_e8_1_winner/100), col = "#001A57") ## Left side S16 winner line
-segments(80,49,80,57, lwd = 9*(top_left_e8_1_winner/100), col = "#001A57") ## connect two teams (Elite 8)
+segments(60,57,80,57, lwd = 9*(top_left_e8_1_winner/100), col = "#041E42") ## Left side S16 winner line
+segments(80,49,80,57, lwd = 9*(top_left_e8_1_winner/100), col = "#041E42") ## connect two teams (Elite 8)
 
 ### Bottom Left (W) ####
 # first round, bottom left (Region W)
@@ -133,7 +133,7 @@ text(9.8,28.75,submission$TeamName[which(submission$Seed == 16 & submission$Regi
 text(9.8,26.75,submission$TeamName[which(submission$Seed == 8 & submission$Region == "W")],cex=.7)
 text(9.8,24.75,submission$TeamName[which(submission$Seed == 9 & submission$Region == "W")],cex=.7)
 text(9.8,22.75,submission$TeamName[which(submission$Seed == 5 & submission$Region == "W")],cex=.7)
-text(9.8,20.75,submission$TeamName[which(submission$Seed == 12 & submission$Region == "W")],cex=.7)
+text(9.8,20.75,submission$TeamName[which(submission$Seed == 12 & submission$Region == "W" & submission$Round1 > 0.5)],cex=.7)
 text(9.8,18.75,submission$TeamName[which(submission$Seed == 4 & submission$Region == "W")],cex=.7)
 text(9.8,16.75,submission$TeamName[which(submission$Seed == 13 & submission$Region == "W")],cex=.7)
 text(9.8,14.75,submission$TeamName[which(submission$Seed == 6 & submission$Region == "W")],cex=.7)
@@ -166,9 +166,9 @@ text(29.8, 9.75, bottom_left_3_14_winner,cex=.7,col = "#737373")
 text(29.8, 5.75, bottom_left_7_10_winner,cex=.7,col = "#737373")
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(29.8,30.25,paste0(bottom_left_1_16_winner,"%"), cex=.9)
-segments(20,29,20,29.75, lwd = 9*(top_left_1_16_winner/100), col = "#041E42")
-segments(20,29,40,29, lwd = 9*(bottom_left_1_16_winner/100), col = "#041E42") ## Left side R1 winner line
-segments(40,29,40,27, lwd = 9*(bottom_left_1_16_winner/100), col = "#041E42") ## connect two teams (R32)
+segments(20,29,20,29.75, lwd = 9*(top_left_1_16_winner/100), col = "#154734")
+segments(20,29,40,29, lwd = 9*(bottom_left_1_16_winner/100), col = "#154734") ## Left side R1 winner line
+segments(40,29,40,27, lwd = 9*(bottom_left_1_16_winner/100), col = "#154734") ## connect two teams (R32)
 
 
 # Sweet 16, bottom left (Region Z)
@@ -184,8 +184,8 @@ text(49.8,19.75,bottom_left_s16_2_winner,cex=.7,col = "#737373")
 text(49.8,11.75,bottom_left_s16_3_winner,cex=.7,col = "#737373")
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(49.8,28.25,paste0(bottom_left_s16_1_winner,"%"),cex=.9)
-segments(40,27,60,27, lwd = 9*(bottom_left_s16_1_winner/100), col = "#041E42") ## Left side R2 winner line
-segments(60,27,60,23, lwd = 9*(bottom_left_s16_1_winner/100), col = "#041E42") ## connect two teams (Sweet 16)
+segments(40,27,60,27, lwd = 9*(bottom_left_s16_1_winner/100), col = "#154734") ## Left side R2 winner line
+segments(60,27,60,23, lwd = 9*(bottom_left_s16_1_winner/100), col = "#154734") ## connect two teams (Sweet 16)
 
 
 ## Elite 8, bottom left (Region Z)
@@ -195,8 +195,8 @@ bottom_left_e8_2_winner <- (submission %>% filter(Region == "W" & Seed %in% c(2,
 text(69.8, 8.25,bottom_left_e8_2_winner,cex=.9, col = "#737373")
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(69.8,24.75,paste0(bottom_left_e8_1_winner,"%"),cex=.9)
-segments(60,23,80,23, lwd = 9*(bottom_left_e8_1_winner/100), col =  "#041E42") ## Left side S16 winner line
-segments(80,23,80,15, lwd = 9*(bottom_left_e8_1_winner/100), col = "#041E42") ## connect two teams (Elite 8)
+segments(60,23,80,23, lwd = 9*(bottom_left_e8_1_winner/100), col =  "#154734") ## Left side S16 winner line
+segments(80,23,80,15, lwd = 9*(bottom_left_e8_1_winner/100), col = "#154734") ## connect two teams (Elite 8)
 
 
 ### Top Right (Z) ####
@@ -239,9 +239,9 @@ text(189.8,35.75,top_right_2_15_winner,cex=.7,col = "#737373")
 
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(189.8,64.5,paste0(top_right_1_16_winner,"%"),cex=.9)  
-segments(200,63,200,63.75, lwd = 9*(top_left_1_16_winner/100), col = "#1C3C34")
-segments(180,63,200,63, lwd = 9*(top_right_1_16_winner/100), col = "#1C3C34") ## Right side R1 winner line
-segments(180,61,180,63, lwd = 9*(top_right_1_16_winner/100), col = "#1C3C34") ## connect two teams (R32)
+segments(200,63,200,63.75, lwd = 9*(top_left_1_16_winner/100), col = "#CC0033")
+segments(180,63,200,63, lwd = 9*(top_right_1_16_winner/100), col = "#CC0033") ## Right side R1 winner line
+segments(180,61,180,63, lwd = 9*(top_right_1_16_winner/100), col = "#CC0033") ## connect two teams (R32)
 
 
 # Sweet 16, top right (Region W)
@@ -256,8 +256,8 @@ text(169.8,37.75,top_right_s16_4_winner,cex=.7,col = "#737373")
 
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(169.8,62.5,paste0(top_right_s16_1_winner,"%"),cex=.9)  
-segments(160,61,180,61, lwd = 9*(top_right_s16_1_winner/100), col = "#1C3C34") ## Right side R2 winner line
-segments(160,57,160,61, lwd = 9*(top_right_s16_1_winner/100), col = "#1C3C34") ## connect two teams (Sweet 16)
+segments(160,61,180,61, lwd = 9*(top_right_s16_1_winner/100), col = "#CC0033") ## Right side R2 winner line
+segments(160,57,160,61, lwd = 9*(top_right_s16_1_winner/100), col = "#CC0033") ## connect two teams (Sweet 16)
 
 
 ## Elite 8, top right (Region W)
@@ -267,14 +267,14 @@ top_right_e8_2_winner <- (submission %>% filter(Region == "Z" & Seed %in% c(6,11
 text(149.8,42.25,top_right_e8_2_winner,cex=.9,col = "#737373")
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(149.8,58.5,paste0(top_right_e8_1_winner,"%"),cex=.9)
-segments(140,57,160,57, lwd = 9*(top_right_e8_1_winner/100), col = "#1C3C34") ## Left side S16 winner line
-segments(140,49,140,57, lwd = 9*(top_right_e8_1_winner/100), col = "#1C3C34") ## connect two teams (Elite 8)
+segments(140,57,160,57, lwd = 9*(top_right_e8_1_winner/100), col = "#CC0033") ## Left side S16 winner line
+segments(140,49,140,57, lwd = 9*(top_right_e8_1_winner/100), col = "#CC0033") ## connect two teams (Elite 8)
 
 
 ### Bottom Right (Y) ####
 #First round, bottom right (Region X)
 text(209.8,30.75,submission$TeamName[which(submission$Seed == 1 & submission$Region == "Y")],cex=.7)
-text(209.8,28.75,submission$TeamName[which(submission$Seed == 16 & submission$Region == "Y")],cex=.7)
+text(209.8,28.75,submission$TeamName[which(submission$Seed == 16 & submission$Region == "Y" & submission$Round1 > 0.5)],cex=.7)
 text(209.8,26.75,submission$TeamName[which(submission$Seed == 8 & submission$Region == "Y")],cex=.7)
 text(209.8,24.75,submission$TeamName[which(submission$Seed == 9 & submission$Region == "Y")],cex=.7)
 text(209.8,22.75,submission$TeamName[which(submission$Seed == 5 & submission$Region == "Y")],cex=.7)
@@ -310,9 +310,9 @@ text(189.8, 9.75,bottom_right_3_14_winner,cex=.7,col = "#737373")
 text(189.8, 5.75,bottom_right_7_10_winner,cex=.7,col = "#737373")
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(189.8,30.25,paste0(bottom_right_1_16_winner,"%"),cex=.9)  
-segments(200,29,200,29.75, lwd = 9*(bottom_right_1_16_winner/100), col = "#E84A27")
-segments(180,29,200,29, lwd = 9*(bottom_right_1_16_winner/100), col = "#E84A27") ## Left side R1 winner line
-segments(180,29,180,27, lwd = 9*(bottom_right_1_16_winner/100), col = "#E84A27") ## connect two teams (R32)
+segments(200,29,200,29.75, lwd = 9*(bottom_right_1_16_winner/100), col = "#0051BA")
+segments(180,29,200,29, lwd = 9*(bottom_right_1_16_winner/100), col = "#0051BA") ## Left side R1 winner line
+segments(180,29,180,27, lwd = 9*(bottom_right_1_16_winner/100), col = "#0051BA") ## connect two teams (R32)
 
 
 
@@ -328,8 +328,8 @@ text(169.8,11.75,bottom_right_s16_3_winner,cex=.7,col = "#737373")
 text(169.8,4.25,bottom_right_s16_4_winner,cex=.7, col = "#737373")  
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(169.8,28.5,paste0(bottom_right_s16_1_winner,"%"),cex=.9)  
-segments(160,27,180,27, lwd = 9*(bottom_right_s16_1_winner/100), col = "#E84A27") ## Left side R2 winner line
-segments(160,27,160,23, lwd = 9*(bottom_right_s16_1_winner/100), col = "#E84A27") ## connect two teams (Sweet 16)
+segments(160,27,180,27, lwd = 9*(bottom_right_s16_1_winner/100), col = "#0051BA") ## Left side R2 winner line
+segments(160,27,160,23, lwd = 9*(bottom_right_s16_1_winner/100), col = "#0051BA") ## connect two teams (Sweet 16)
 
 # Elite 8, bottom right (Region X)
 ## Determine winners/probabilities from Sweet 16 and carry forward
@@ -339,8 +339,8 @@ bottom_right_e8_2_winner <- (submission %>% filter(Region == "Y" & Seed %in% c(6
 text(149.8, 8.25,bottom_right_e8_2_winner,cex=.9, col = "#737373")
 ## For Final 4 team, write the probability and redraw the line to be colored and weighted by prob
 text(149.8,24.25,paste0(bottom_right_e8_1_winner,"%"),cex=.9)
-segments(140,23,160,23, lwd = 9*(bottom_right_e8_1_winner/100), col =  "#E84A27") ## Left side S16 winner line
-segments(140,23,140,15, lwd = 9*(bottom_right_e8_1_winner/100), col = "#E84A27") ## connect two teams (Elite 8)
+segments(140,23,160,23, lwd = 9*(bottom_right_e8_1_winner/100), col =  "#0051BA") ## Left side S16 winner line
+segments(140,23,140,15, lwd = 9*(bottom_right_e8_1_winner/100), col =  "#0051BA") ## connect two teams (Elite 8)
 
 
 
@@ -357,10 +357,10 @@ text(89.8,50.5, paste0(top_left_final_four,"%"),cex=.9) # Champ Top Left (Y)
 text(89.8,16.5, paste0(bottom_left_final_four,"%"),cex=.9) # Champ Bottom Left (Z)
 
 ### Final Four lines
-segments(80,49,100,49,lwd = 9*(top_left_final_four/100), col = "#001A57")  ## Top Left Elite 8 Winner Lines
-segments(80,15,100,15,lwd = 9*(bottom_left_final_four/100), col = "#041E42")  ## Bottom Left Elite 8 Winner Lines
-segments(120,49,140,49,lwd = 9*(top_right_final_four/100), col = "#1C3C34") ## Top Right Elite 8 Winner Line
-segments(120,15,140,15,lwd = 9*(bottom_right_final_four/100), col = "#E84A27") ## Bottom Right Elite 8 Winner Lines
+segments(80,49,100,49,lwd = 9*(top_left_final_four/100), col = "#041E42")  ## Top Left Elite 8 Winner Lines
+segments(80,15,100,15,lwd = 9*(bottom_left_final_four/100), col = "#154734")  ## Bottom Left Elite 8 Winner Lines
+segments(120,49,140,49,lwd = 9*(top_right_final_four/100), col = "#CC0033") ## Top Right Elite 8 Winner Line
+segments(120,15,140,15,lwd = 9*(bottom_right_final_four/100), col = "#0051BA") ## Bottom Right Elite 8 Winner Lines
 
 
 
@@ -381,12 +381,13 @@ text(109.8,32.5,paste0(winner, " - ", winner_prob, "%"),cex=2.5)
 ### If coming from bottom
 #segments(100,15,100,30, lwd = 9*(champ_left/100),col = "#001A57") ## Championship lines left
 #segments(100,35,100,37, lwd = 9*(champ_left/100),col = "#001A57") ## Championship lines left
-segments(100,49,100,37, lwd = 9*(champ_left/100),col = "#001A57") ## Championship lines left
-segments(100,37,115,37, lwd = 9*(champ_left/100),col = "#001A57") ## Championship lines left
-segments(105,27,120,27, lwd = 9*(champ_right/100),col = "#E84A27") ## Championship lines right
-segments(120,15,120,27, lwd = 9*(champ_right/100),col = "#E84A27") ## Championship lines right
+segments(100,49,100,37, lwd = 9*(champ_left/100),col = "#041E42") ## Championship lines left
+segments(100,37,115,37, lwd = 9*(champ_left/100),col = "#041E42") ## Championship lines left
+#segments(105,27,120,27, lwd = 9*(champ_right/100),col = "#0051BA") ## Championship lines right
+#segments(120,15,120,27, lwd = 9*(champ_right/100),col = "#0051BA") ## Championship lines right
 ## If coming from top right
-#segments(120,49,120,35, lwd = 9*(champ_right/100),col = "#E84A27") ## Championship lines right
-#segments(120,27,120,29, lwd = 9*(champ_right/100),col = "#E84A27") ## Championship lines right
+segments(120,49,120,35, lwd = 9*(champ_right/100),col = "#CC0033") ## Championship lines right
+segments(120,27,120,29, lwd = 9*(champ_right/100),col = "#CC0033") ## Championship lines right
+segments(105,27,120,27, lwd = 9*(champ_right/100),col = "#CC0033") ## Championship lines right
 
 dev.off()

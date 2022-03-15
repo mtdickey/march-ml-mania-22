@@ -169,7 +169,7 @@ def find_round_prob(sub_df, probs_df, team_id, rnd):
     return rnd_prob
 
 
-def compute_conditional_probs(sub_filepath, league = 'men'):
+def compute_conditional_probs(sub_filepath, season, league = 'men'):
     """
     Function to take the submission file and calculate conditional probabilities for each team/round.
 
@@ -192,11 +192,11 @@ def compute_conditional_probs(sub_filepath, league = 'men'):
     sub_df['TeamID_2']  = sub_df['ID'].apply(lambda x: x.split('_')[2]).astype(int)
     
     ## Get the seeds and slots
-    tourney_seeds_df = pd.read_csv(f"{prefix}NCAATourneySeeds.csv")
-    tourney_seeds_df = tourney_seeds_df[tourney_seeds_df['Season'] == 2021].copy()
-    tourney_slots_df = pd.read_csv(f"{prefix}NCAATourneySlots.csv")
+    tourney_seeds_df = pd.read_csv(f"stage_2/{prefix}NCAATourneySeeds.csv")
+    tourney_seeds_df = tourney_seeds_df[tourney_seeds_df['Season'] == season].copy()
+    tourney_slots_df = pd.read_csv(f"stage_2/{prefix}NCAATourneySlots.csv")
     if league == 'men':
-        tourney_slots_df = tourney_slots_df[tourney_slots_df['Season'] == 2021].copy()
+        tourney_slots_df = tourney_slots_df[tourney_slots_df['Season'] == season].copy()
     
     ## Merge in seeds to submission
     tourney_seeds_df = tourney_seeds_df.rename(columns = {'TeamID': 'TeamID_1', 'Seed': 'Seed_1'})
